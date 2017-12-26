@@ -1,4 +1,4 @@
-package com.example.zhaojian.test2.dataEntity;
+package com.example.zhaojian.ExcelToXml.dataEntity;
 
 /**
  * Created by zhaojian on 2017/12/25.

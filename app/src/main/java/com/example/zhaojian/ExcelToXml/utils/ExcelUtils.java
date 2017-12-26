@@ -1,12 +1,12 @@
-package com.example.zhaojian.test2.utils;
+package com.example.zhaojian.ExcelToXml.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.example.zhaojian.test2.DataManager;
-import com.example.zhaojian.test2.dataEntity.SectionEntity;
-import com.example.zhaojian.test2.dataEntity.SubSectionEntity;
-import com.example.zhaojian.test2.dataEntity.ValueEntity;
+import com.example.zhaojian.ExcelToXml.DataManager;
+import com.example.zhaojian.ExcelToXml.dataEntity.SectionEntity;
+import com.example.zhaojian.ExcelToXml.dataEntity.SubSectionEntity;
+import com.example.zhaojian.ExcelToXml.dataEntity.ValueEntity;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
