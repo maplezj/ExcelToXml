@@ -82,7 +82,7 @@ public class XMLUtils
                         List<ValueEntity> linkValueEntityList = subSectionEntity.getLinkValueEntityList();
                         List<SubSectionEntity> linkSubSectionEntityList = subSectionEntity.getLinkList();
 
-                        for (int i = 0; i < valueEntityList.size() && i < linkSubSectionEntityList.size(); i++)
+                        for (int i = 0; i < valueEntityList.size(); i++)
                         {
                             ValueEntity valueEntity = valueEntityList.get(i);
                             Element subSubElement = new Element("item");
