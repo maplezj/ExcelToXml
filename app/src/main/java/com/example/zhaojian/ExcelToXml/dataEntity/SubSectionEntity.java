@@ -1,5 +1,6 @@
 package com.example.zhaojian.ExcelToXml.dataEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,12 +31,20 @@ public class SubSectionEntity extends BaseEntity
     private boolean show = true;
     /*是否可编辑*/
     private boolean enable = true;
-    /* 关联影响的二级节点*/
-    private SubSectionEntity link;
     /* 关联数据库字段 */
     private String dataBaseLink;
     /*对应的值域*/
-    private List<ValueEntity> valueEntityList;
+    private List<ValueEntity> valueEntityList = new ArrayList<>();
+
+    /*受其他二级节点的影响*/
+    private String linkedStr;
+    /*受其他二级节点影响对应值域*/
+    private String linkedValueStr;
+    /*影响其他二级节点*/
+    private List<SubSectionEntity> linkList = new ArrayList<>();
+    /*影响其他二级节点对应值域*/
+    private List<ValueEntity> linkValueEntityList = new ArrayList<>();
+
 
 
     public int getType()
@@ -68,16 +77,6 @@ public class SubSectionEntity extends BaseEntity
         this.enable = enable;
     }
 
-    public SubSectionEntity getLink()
-    {
-        return link;
-    }
-
-    public void setLink(SubSectionEntity link)
-    {
-        this.link = link;
-    }
-
     public String getDataBaseLink()
     {
         return dataBaseLink;
@@ -96,5 +95,55 @@ public class SubSectionEntity extends BaseEntity
     public void setValueEntityList(List<ValueEntity> valueEntityList)
     {
         this.valueEntityList = valueEntityList;
+    }
+
+    public String getLinkedStr()
+    {
+        return linkedStr;
+    }
+
+    public void setLinkedStr(String linkedStr)
+    {
+        this.linkedStr = linkedStr;
+    }
+
+    public String getLinkedValueStr()
+    {
+        return linkedValueStr;
+    }
+
+    public void setLinkedValueStr(String linkedValueStr)
+    {
+        this.linkedValueStr = linkedValueStr;
+    }
+
+    public List<SubSectionEntity> getLinkList()
+    {
+        return linkList;
+    }
+
+    public void setLinkList(List<SubSectionEntity> linkList)
+    {
+        this.linkList = linkList;
+    }
+
+    public List<ValueEntity> getLinkValueEntityList()
+    {
+        return linkValueEntityList;
+    }
+
+    public void setLinkValueEntityList(List<ValueEntity> linkValueEntityList)
+    {
+        this.linkValueEntityList = linkValueEntityList;
+    }
+
+    public void addLinkSubSection(SubSectionEntity subSectionEntity)
+    {
+        linkList.add(subSectionEntity);
+    }
+
+    public void addLinkValueEntity(ValueEntity valueEntity)
+    {
+        linkValueEntityList.add(valueEntity);
     }
 }

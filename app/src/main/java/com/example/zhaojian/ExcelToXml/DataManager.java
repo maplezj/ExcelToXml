@@ -3,6 +3,7 @@ package com.example.zhaojian.ExcelToXml;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.example.zhaojian.ExcelToXml.dataEntity.SubSectionEntity;
 import com.example.zhaojian.ExcelToXml.utils.ExcelUtils;
 
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class DataManager
     private HashMap<String,Integer> subSectionMap;
     /*字段对应的字段id*/
     private HashMap<String,String> sectionIdMap;
+    /*xml中节点名称*/
+    private HashMap<Integer,String> xmlSectionMap;
 
     public static DataManager getIns()
     {
@@ -31,6 +34,7 @@ public class DataManager
     private DataManager()
     {
         initSubSectionMap();
+        initXmlMap();
     }
 
     private void initSubSectionMap()
@@ -41,6 +45,18 @@ public class DataManager
         subSectionMap.put("单选", 2);
         subSectionMap.put("多选", 3);
         subSectionMap.put("日期", 4);
+        subSectionMap.put("搜索", 5);
+        subSectionMap.put("列表", 6);
+    }
+
+    private void initXmlMap()
+    {
+        xmlSectionMap = new HashMap<>();
+        xmlSectionMap.put(SubSectionEntity.TYPE_INPUT_TXT, "input");
+        xmlSectionMap.put(SubSectionEntity.TYPE_INPUT_NUMBER, "input");
+        xmlSectionMap.put(SubSectionEntity.TYPE_RADIO, "radio");
+        xmlSectionMap.put(SubSectionEntity.TYPE_SELECT, "select");
+        xmlSectionMap.put(SubSectionEntity.TYPE_DATE, "date");
     }
 
     public int getSubSectionType(String typeStr)
@@ -60,6 +76,15 @@ public class DataManager
             return "";
         }
         return sectionIdMap.get(sectionName).toLowerCase();
+    }
+
+    public String getXmlSectionName(int subSectionType)
+    {
+        if (xmlSectionMap.containsKey(subSectionType))
+        {
+            return xmlSectionMap.get(subSectionType);
+        }
+        return "unknow";
     }
 
     public void initIdMap(Context context, String fileName)

@@ -88,6 +88,11 @@ public class ExcelUtils
                     cell1 = readSheet.getCell(3, i);
                     subSectionEntity.setValueEntityList(getValueEntityList(cell1.getContents()));
                     subSectionEntityList.add(subSectionEntity);
+
+                    /*link*/
+                    cell1 = readSheet.getCell(4, i);
+                    parseLink(subSectionEntity, cell1.getContents());
+
                     i++;
                     if (i >= rsRows || !TextUtils.isEmpty(readSheet.getCell(0, i).getContents()))
                     {
@@ -95,6 +100,7 @@ public class ExcelUtils
                     }
                 }
                 sectionEntity.setSubSectionList(subSectionEntityList);
+                relateLink(sectionEntity);
                 sectionEntityList.add(sectionEntity);
             }
         }
@@ -176,6 +182,54 @@ public class ExcelUtils
             valueEntityList.add(valueEntity);
         }
         return valueEntityList;
+    }
+
+    private static void parseLink(SubSectionEntity subSectionEntity, String content)
+    {
+        if (TextUtils.isEmpty(content))
+        {
+            return;
+        }
+        String[] data = content.split("=");
+        if (data.length == 2)
+        {
+            subSectionEntity.setLinkedStr(data[0]);
+            subSectionEntity.setLinkedValueStr(data[1]);
+        }
+    }
+
+    private static void relateLink(SectionEntity sectionEntity)
+    {
+        List<SubSectionEntity> subSectionList = sectionEntity.getSubSectionList();
+        for (SubSectionEntity subSectionEntity : subSectionList)
+        {
+            String linkedStr = subSectionEntity.getLinkedStr();
+            if (!TextUtils.isEmpty(linkedStr))
+            {
+                for (int i = 0; i < subSectionList.size(); i++)
+                {
+                    SubSectionEntity subSectionEntityTem = subSectionList.get(i);
+                    if (subSectionEntity != subSectionEntityTem && linkedStr.equals(subSectionEntityTem.getName()))
+                    {
+                        subSectionEntityTem.addLinkSubSection(subSectionEntity);
+                    }
+                    List<ValueEntity> valueEntityList = subSectionEntityTem.getValueEntityList();
+                    String linkedValue = subSectionEntity.getLinkedValueStr();
+                    if (valueEntityList == null || valueEntityList.size() == 0)
+                    {
+                        continue;
+                    }
+                    for (ValueEntity valueEntity : valueEntityList)
+                    {
+                        if (linkedValue.equals(valueEntity.getName()))
+                        {
+                            subSectionEntityTem.addLinkValueEntity(valueEntity);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
